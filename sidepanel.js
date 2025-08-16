@@ -2,7 +2,7 @@ function renderHistory() {
   chrome.storage.local.get({ history: [] }, res => {
     const list = document.getElementById('history');
     list.innerHTML = '';
-    res.history.forEach(item => {
+    res.history.slice().reverse().forEach(item => {
       const li = document.createElement('li');
       const img = document.createElement('img');
       img.src = item.src;
@@ -13,8 +13,13 @@ function renderHistory() {
       p.textContent = item.prompt || '';
       const span = document.createElement('span');
       span.textContent = new Date(item.time).toLocaleString();
+      const copyBtn = document.createElement('button');
+      copyBtn.className = 'copy';
+      copyBtn.textContent = 'Copy';
+      copyBtn.addEventListener('click', () => navigator.clipboard.writeText(item.prompt || ''));
       info.appendChild(p);
       info.appendChild(span);
+      info.appendChild(copyBtn);
       li.appendChild(img);
       li.appendChild(info);
       list.appendChild(li);

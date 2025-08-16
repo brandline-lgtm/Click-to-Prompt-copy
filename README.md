@@ -1,6 +1,6 @@
 # Image Prompt Enhancer
 
-Chrome extension that generates ultra-enhanced prompts for images using Google's Gemini API. When you click an image, a popup offers **Show** and **Copy** actions, and a side panel tracks your click history.
+Chrome extension that generates ultra‑enhanced prompts for images using Google's Gemini API. Hover over any image to reveal a **View Prompt** button and the prompt appears in the side panel, which also tracks your history.
 
 ## Installation
 
@@ -11,10 +11,9 @@ Chrome extension that generates ultra-enhanced prompts for images using Google's
 
 ## Usage
 
-- Click any image on a webpage to display the popup.
-- **Show**: fetches a prompt from the Gemini API and displays it.
-- **Copy**: copies the generated prompt to your clipboard. The prompt dialog also includes a copy button for convenience.
-- The side panel opens after the first image click, showing thumbnails, generated prompts, and timestamps. Use **Clear History** to remove stored entries.
+- Hover over any image to show the **View Prompt** button.
+- Click **View Prompt** to send the image to the Gemini API and open the side panel.
+- The side panel lists each image with its generated prompt, timestamp and a **Copy** button. Use **Clear History** to remove stored entries.
 
 ## Development
 

@@ -1,78 +1,46 @@
-const promptCache = new Map();
-let popup;
+let viewBtn;
+let activeImg;
 
-function handleImageClick(event) {
-  const img = event.target.closest('img');
-  if (!img) return;
-  event.preventDefault();
-  createPopup(img);
-  chrome.runtime.sendMessage({ type: 'recordClick', src: img.src });
-}
-
-document.addEventListener('click', handleImageClick);
-
-function createPopup(img) {
-  removePopup();
-  popup = document.createElement('div');
-  popup.id = 'ctp-popup';
-  popup.className = 'ctp-popup';
-
-  const showBtn = document.createElement('button');
-  showBtn.textContent = 'Show';
-  const copyBtn = document.createElement('button');
-  copyBtn.textContent = 'Copy';
-
-  popup.appendChild(showBtn);
-  popup.appendChild(copyBtn);
-  document.body.appendChild(popup);
-
+function showButton(img) {
+  removeButton();
+  activeImg = img;
+  viewBtn = document.createElement('button');
+  viewBtn.id = 'ctp-view-btn';
+  viewBtn.textContent = 'View Prompt';
+  document.body.appendChild(viewBtn);
   const rect = img.getBoundingClientRect();
-  popup.style.top = `${rect.bottom + window.scrollY}px`;
-  popup.style.left = `${rect.left + window.scrollX}px`;
-
-  showBtn.addEventListener('click', () => {
-    getPrompt(img.src).then(prompt => displayPrompt(prompt, img.src));
-  });
-
-  copyBtn.addEventListener('click', () => {
-    getPrompt(img.src).then(prompt => navigator.clipboard.writeText(prompt));
+  viewBtn.style.top = `${rect.top + window.scrollY + 5}px`;
+  viewBtn.style.left = `${rect.left + window.scrollX + 5}px`;
+  viewBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    chrome.runtime.sendMessage({ type: 'generatePrompt', src: img.src });
+    removeButton();
   });
 }
 
-function removePopup() {
-  if (popup) popup.remove();
-}
-
-function getPrompt(src) {
-  if (promptCache.has(src)) {
-    return Promise.resolve(promptCache.get(src));
+function removeButton() {
+  if (viewBtn) {
+    viewBtn.remove();
+    viewBtn = null;
+    activeImg = null;
   }
-  return new Promise((resolve, reject) => {
-    chrome.runtime.sendMessage({ type: 'getPrompt', src }, response => {
-      if (response && response.prompt) {
-        promptCache.set(src, response.prompt);
-        resolve(response.prompt);
-      } else {
-        reject('No prompt');
-      }
-    });
-  });
 }
 
-function displayPrompt(text, src) {
-  const modal = document.createElement('div');
-  modal.className = 'ctp-modal';
-  modal.innerHTML = `
-    <div class="ctp-modal-content">
-      <img src="${src}" alt="clicked image" />
-      <pre>${text}</pre>
-      <div class="ctp-modal-actions">
-        <button id="ctp-copy">Copy</button>
-        <button id="ctp-close">Close</button>
-      </div>
-    </div>
-  `;
-  document.body.appendChild(modal);
-  modal.querySelector('#ctp-close').addEventListener('click', () => modal.remove());
-  modal.querySelector('#ctp-copy').addEventListener('click', () => navigator.clipboard.writeText(text));
-}
+document.addEventListener('mouseover', e => {
+  const img = e.target.closest('img');
+  if (!img) return;
+  showButton(img);
+});
+
+document.addEventListener('mousemove', e => {
+  if (!viewBtn || !activeImg) return;
+  const rect = activeImg.getBoundingClientRect();
+  const btnRect = viewBtn.getBoundingClientRect();
+  const x = e.clientX;
+  const y = e.clientY;
+  const insideImage = x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
+  const insideBtn = x >= btnRect.left && x <= btnRect.right && y >= btnRect.top && y <= btnRect.bottom;
+  if (!insideImage && !insideBtn) {
+    removeButton();
+  }
+});

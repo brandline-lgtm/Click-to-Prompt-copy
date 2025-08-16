@@ -49,9 +49,24 @@ h1 {
 #history .prompt {
   font-size: 12px;
   margin: 0 0 4px 0;
+  white-space: pre-wrap;
 }
 
 #history span {
   font-size: 11px;
   color: #bbb;
+}
+
+#history .copy {
+  background: #333;
+  color: #fff;
+  border: none;
+  padding: 4px 6px;
+  cursor: pointer;
+  margin-top: 4px;
+  align-self: flex-start;
+}
+
+#history .copy:hover {
+  background: #444;
 }

@@ -6,31 +6,27 @@ chrome.runtime.onInstalled.addListener(() => {
 });
 
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
-  if (msg.type === 'getPrompt') {
+  if (msg.type === 'generatePrompt') {
     chrome.storage.local.get({ history: [] }, async res => {
       const existing = res.history.find(item => item.src === msg.src && item.prompt);
+      let prompt;
       if (existing) {
-        sendResponse({ prompt: existing.prompt });
+        prompt = existing.prompt;
       } else {
         try {
-          const prompt = await fetchPrompt(msg.src);
+          prompt = await fetchPrompt(msg.src);
           saveHistory(msg.src, prompt);
-          sendResponse({ prompt });
         } catch (e) {
-          sendResponse({ prompt: 'Error generating prompt.' });
+          prompt = 'Error generating prompt.';
         }
       }
-    });
-    return true;
-  }
-  if (msg.type === 'recordClick') {
-    fetchPrompt(msg.src).then(prompt => {
-      saveHistory(msg.src, prompt);
       if (!panelOpened && sender.tab) {
         chrome.sidePanel.open({ windowId: sender.tab.windowId });
         panelOpened = true;
       }
+      sendResponse({ prompt });
     });
+    return true;
   }
 });
 

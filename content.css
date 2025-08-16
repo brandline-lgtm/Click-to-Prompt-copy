@@ -1,73 +1,14 @@
-.ctp-popup {
+#ctp-view-btn {
   position: absolute;
   background: #333;
+  color: #fff;
   border: 1px solid #555;
   border-radius: 4px;
-  padding: 4px;
-  z-index: 2147483647;
-  display: flex;
-  gap: 4px;
-}
-
-.ctp-popup button {
-  background: #444;
-  color: #fff;
-  border: none;
   padding: 4px 8px;
-  cursor: pointer;
-}
-
-.ctp-popup button:hover {
-  background: #555;
-}
-
-.ctp-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.8);
-  display: flex;
-  align-items: center;
-  justify-content: center;
   z-index: 2147483647;
-}
-
-.ctp-modal-content {
-  background: #222;
-  color: #fff;
-  padding: 20px;
-  max-width: 80%;
-  max-height: 80%;
-  overflow: auto;
-  border-radius: 8px;
-}
-
-.ctp-modal-content img {
-  max-width: 100%;
-  display: block;
-  margin-bottom: 10px;
-}
-
-.ctp-modal-content pre {
-  white-space: pre-wrap;
-}
-
-.ctp-modal-actions {
-  display: flex;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-.ctp-modal-actions button {
-  background: #444;
-  color: #fff;
-  border: none;
-  padding: 6px 12px;
   cursor: pointer;
 }
 
-.ctp-modal-actions button:hover {
-  background: #555;
+#ctp-view-btn:hover {
+  background: #444;
 }
