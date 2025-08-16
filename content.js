@@ -31,7 +31,7 @@ function createPopup(img) {
   popup.style.left = `${rect.left + window.scrollX}px`;
 
   showBtn.addEventListener('click', () => {
-    getPrompt(img.src).then(prompt => displayPrompt(prompt));
+    getPrompt(img.src).then(prompt => displayPrompt(prompt, img.src));
   });
 
   copyBtn.addEventListener('click', () => {
@@ -59,11 +59,12 @@ function getPrompt(src) {
   });
 }
 
-function displayPrompt(text) {
+function displayPrompt(text, src) {
   const modal = document.createElement('div');
   modal.className = 'ctp-modal';
   modal.innerHTML = `
     <div class="ctp-modal-content">
+      <img src="${src}" alt="clicked image" />
       <pre>${text}</pre>
       <div class="ctp-modal-actions">
         <button id="ctp-copy">Copy</button>

@@ -7,17 +7,30 @@ chrome.runtime.onInstalled.addListener(() => {
 
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   if (msg.type === 'getPrompt') {
-    fetchPrompt(msg.src)
-      .then(prompt => sendResponse({ prompt }))
-      .catch(() => sendResponse({ prompt: 'Error generating prompt.' }));
+    chrome.storage.local.get({ history: [] }, async res => {
+      const existing = res.history.find(item => item.src === msg.src && item.prompt);
+      if (existing) {
+        sendResponse({ prompt: existing.prompt });
+      } else {
+        try {
+          const prompt = await fetchPrompt(msg.src);
+          saveHistory(msg.src, prompt);
+          sendResponse({ prompt });
+        } catch (e) {
+          sendResponse({ prompt: 'Error generating prompt.' });
+        }
+      }
+    });
     return true;
   }
   if (msg.type === 'recordClick') {
-    saveHistory(msg.src);
-    if (!panelOpened && sender.tab) {
-      chrome.sidePanel.open({ windowId: sender.tab.windowId });
-      panelOpened = true;
-    }
+    fetchPrompt(msg.src).then(prompt => {
+      saveHistory(msg.src, prompt);
+      if (!panelOpened && sender.tab) {
+        chrome.sidePanel.open({ windowId: sender.tab.windowId });
+        panelOpened = true;
+      }
+    });
   }
 });
 
@@ -51,8 +64,8 @@ function arrayBufferToBase64(buffer) {
   return btoa(binary);
 }
 
-function saveHistory(src) {
-  const item = { src, time: Date.now() };
+function saveHistory(src, prompt) {
+  const item = { src, prompt, time: Date.now() };
   chrome.storage.local.get({ history: [] }, res => {
     res.history.push(item);
     chrome.storage.local.set({ history: res.history });

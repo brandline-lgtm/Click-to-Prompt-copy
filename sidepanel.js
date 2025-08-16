@@ -6,10 +6,17 @@ function renderHistory() {
       const li = document.createElement('li');
       const img = document.createElement('img');
       img.src = item.src;
+      const info = document.createElement('div');
+      info.className = 'info';
+      const p = document.createElement('p');
+      p.className = 'prompt';
+      p.textContent = item.prompt || '';
       const span = document.createElement('span');
       span.textContent = new Date(item.time).toLocaleString();
+      info.appendChild(p);
+      info.appendChild(span);
       li.appendChild(img);
-      li.appendChild(span);
+      li.appendChild(info);
       list.appendChild(li);
     });
   });

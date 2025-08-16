@@ -44,6 +44,16 @@
   border-radius: 8px;
 }
 
+.ctp-modal-content img {
+  max-width: 100%;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.ctp-modal-content pre {
+  white-space: pre-wrap;
+}
+
 .ctp-modal-actions {
   display: flex;
   gap: 10px;

@@ -31,7 +31,7 @@ h1 {
 
 #history li {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   margin-bottom: 8px;
 }
 
@@ -41,7 +41,17 @@ h1 {
   margin-right: 8px;
 }
 
-#history span {
+#history .info {
+  display: flex;
+  flex-direction: column;
+}
+
+#history .prompt {
   font-size: 12px;
+  margin: 0 0 4px 0;
+}
+
+#history span {
+  font-size: 11px;
   color: #bbb;
 }

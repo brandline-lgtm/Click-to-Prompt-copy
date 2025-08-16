@@ -14,7 +14,7 @@ Chrome extension that generates ultra-enhanced prompts for images using Google's
 - Click any image on a webpage to display the popup.
 - **Show**: fetches a prompt from the Gemini API and displays it.
 - **Copy**: copies the generated prompt to your clipboard. The prompt dialog also includes a copy button for convenience.
-- The side panel opens after the first image click, showing thumbnails and timestamps. Use **Clear History** to remove stored entries.
+- The side panel opens after the first image click, showing thumbnails, generated prompts, and timestamps. Use **Clear History** to remove stored entries.
 
 ## Development
 
