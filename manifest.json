@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "name": "Click to Prompt",
+  "version": "0.1",
+  "description": "Hover over images to extract text with a sidebar prompt viewer.",
+  "permissions": ["clipboardWrite"],
+  "host_permissions": ["<all_urls>"],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["contentScript.js"],
+      "css": ["contentStyles.css"],
+      "run_at": "document_idle"
+    }
+  ]
+}
