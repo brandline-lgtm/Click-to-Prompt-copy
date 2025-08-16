@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Image to Prompt Tool</title>
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Tesseract.js CDN for OCR -->
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js"></script>
+</head>
+<body>
+  <header>
+    <h1>Image to Prompt Tool</h1>
+  </header>
+  <main>
+    <section class="image-section">
+      <label for="imageUpload" class="upload-label">Upload Image</label>
+      <input type="file" id="imageUpload" accept="image/*" />
+      <div class="image-container">
+        <img id="previewImage" src="https://via.placeholder.com/400x300.png?text=Upload+Image" alt="Preview" />
+        <button id="viewPromptBtn" class="prompt-btn">View Prompt</button>
+      </div>
+    </section>
+    <aside id="promptSidebar" class="sidebar hidden">
+      <div class="sidebar-header">
+        <h2>Prompt</h2>
+        <button id="closeSidebar" aria-label="Close sidebar">&times;</button>
+      </div>
+      <pre id="promptOutput" class="prompt-output"></pre>
+      <div class="sidebar-actions">
+        <button id="copyPrompt">Copy</button>
+        <button id="clearPrompt">Clear</button>
+      </div>
+    </aside>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
