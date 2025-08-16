@@ -62,7 +62,12 @@ function getPrompt(src) {
 function displayPrompt(text) {
   const modal = document.createElement('div');
   modal.className = 'ctp-modal';
-  modal.innerHTML = `\n    <div class="ctp-modal-content">\n      <pre>${text}</pre>\n      <button id="ctp-close">Close<\/button>\n    <\/div>\n  `;
+  modal.innerHTML = `
+    <div class="ctp-modal-content">
+      <pre>${text}</pre>
+      <button id="ctp-close">Close</button>
+    </div>
+  `;
   document.body.appendChild(modal);
   modal.querySelector('#ctp-close').addEventListener('click', () => modal.remove());
 }
