@@ -65,9 +65,13 @@ function displayPrompt(text) {
   modal.innerHTML = `
     <div class="ctp-modal-content">
       <pre>${text}</pre>
-      <button id="ctp-close">Close</button>
+      <div class="ctp-modal-actions">
+        <button id="ctp-copy">Copy</button>
+        <button id="ctp-close">Close</button>
+      </div>
     </div>
   `;
   document.body.appendChild(modal);
   modal.querySelector('#ctp-close').addEventListener('click', () => modal.remove());
+  modal.querySelector('#ctp-copy').addEventListener('click', () => navigator.clipboard.writeText(text));
 }

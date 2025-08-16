@@ -22,6 +22,12 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
 });
 
 async function fetchPrompt(imageUrl) {
+  // Fetch the image and convert to base64 so the Gemini API can read it.
+  const imgRes = await fetch(imageUrl);
+  const mimeType = imgRes.headers.get('content-type') || 'image/png';
+  const arrayBuf = await imgRes.arrayBuffer();
+  const base64 = arrayBufferToBase64(arrayBuf);
+
   const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro-vision:generateContent?key=${API_KEY}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -29,13 +35,20 @@ async function fetchPrompt(imageUrl) {
       contents: [{
         parts: [
           { text: 'Provide an ultra-enhanced prompt for this image.' },
-          { image_url: imageUrl }
+          { inline_data: { mime_type: mimeType, data: base64 } }
         ]
       }]
     })
   });
   const data = await res.json();
   return data?.candidates?.[0]?.content?.parts?.[0]?.text || 'No prompt generated.';
+}
+
+function arrayBufferToBase64(buffer) {
+  let binary = '';
+  const bytes = new Uint8Array(buffer);
+  bytes.forEach(b => (binary += String.fromCharCode(b)));
+  return btoa(binary);
 }
 
 function saveHistory(src) {
