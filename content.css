@@ -1,0 +1,14 @@
+#ctp-view-btn {
+  position: absolute;
+  background: #333;
+  color: #fff;
+  border: 1px solid #555;
+  border-radius: 4px;
+  padding: 4px 8px;
+  z-index: 2147483647;
+  cursor: pointer;
+}
+
+#ctp-view-btn:hover {
+  background: #444;
+}

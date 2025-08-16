@@ -1,0 +1,72 @@
+body {
+  background: #121212;
+  color: #e0e0e0;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 10px;
+}
+
+h1 {
+  font-size: 18px;
+  margin-top: 0;
+}
+
+#clear {
+  background: #333;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+#clear:hover {
+  background: #444;
+}
+
+#history {
+  list-style: none;
+  padding: 0;
+}
+
+#history li {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+
+#history img {
+  max-width: 40px;
+  max-height: 40px;
+  margin-right: 8px;
+}
+
+#history .info {
+  display: flex;
+  flex-direction: column;
+}
+
+#history .prompt {
+  font-size: 12px;
+  margin: 0 0 4px 0;
+  white-space: pre-wrap;
+}
+
+#history span {
+  font-size: 11px;
+  color: #bbb;
+}
+
+#history .copy {
+  background: #333;
+  color: #fff;
+  border: none;
+  padding: 4px 6px;
+  cursor: pointer;
+  margin-top: 4px;
+  align-self: flex-start;
+}
+
+#history .copy:hover {
+  background: #444;
+}
